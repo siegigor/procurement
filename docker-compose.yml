@@ -1,0 +1,47 @@
+version: '3'
+services:
+    procurement-nginx:
+        build:
+            context: ./project/docker/development/nginx
+            dockerfile: Dockerfile
+        volumes:
+            - ./project:/app
+        ports:
+            - "8081:80"
+
+    procurement-php-fpm:
+        build:
+            context: ./project/docker/development/php
+            dockerfile: php-fpm/Dockerfile
+        volumes:
+            - ./project:/app
+        environment:
+            BASE_URL: 127.0.0.1:8081
+            DATABASE_URL: "postgresql://app:app@app:5432/app?serverVersion=11.2&charset=utf8"
+
+    procurement-php-cli:
+        build:
+            context: ./project/docker/development/php
+            dockerfile: php-cli/Dockerfile
+        volumes:
+            - ./project:/app
+            - procurement-composer:/root/.composer/cache
+        environment:
+            BASE_URL: 127.0.0.1:8081
+            DATABASE_URL: "postgresql://app:app@app:5432/app?serverVersion=11.2&charset=utf8"
+        tty: true
+
+    procurement-postgres:
+        image: postgres:11.2-alpine
+        volumes:
+            - procurement-postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: app
+            POSTGRES_DB: app
+        ports:
+            - "54329:5432"
+
+volumes:
+    procurement-postgres:
+    procurement-composer:

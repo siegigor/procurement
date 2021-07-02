@@ -17,9 +17,18 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/Model/Procurement/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Infrastructure\Model\Procurement\Entity\Customer\Customer\CustomerRepository: ~
+    App\Model\Procurement\Entity\Customer\Customer\CustomerRepository: '@App\Infrastructure\Model\Procurement\Entity\Customer\Customer\CustomerRepository'
+
+    App\Infrastructure\Model\Procurement\Entity\Supplier\Supplier\SupplierRepository: ~
+    App\Model\Procurement\Entity\Supplier\Supplier\SupplierRepository: '@App\Infrastructure\Model\Procurement\Entity\Supplier\Supplier\SupplierRepository'
+
+    App\Infrastructure\Model\Procurement\Entity\Customer\Request\RequestRepository: ~
+    App\Model\Procurement\Entity\Customer\Request\RequestRepository: '@App\Infrastructure\Model\Procurement\Entity\Customer\Request\RequestRepository'
+
+    App\Infrastructure\Model\Procurement\Entity\Supplier\Proposal\ProposalRepository: ~
+    App\Model\Procurement\Entity\Supplier\Proposal\ProposalRepository: '@App\Infrastructure\Model\Procurement\Entity\Supplier\Proposal\ProposalRepository'

@@ -6,5 +6,9 @@ namespace App\Model\Procurement\Entity\Customer\Customer;
 
 interface CustomerRepository
 {
+    public function get(Id $id): Customer;
 
+    public function add(Customer $customer): void;
+
+    public function remove(Customer $customer): void;
 }

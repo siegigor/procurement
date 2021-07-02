@@ -76,6 +76,17 @@ class Request
         return $this->status->isDraft();
     }
 
+    public function getCriteriaById(string $criteriaId): Criteria
+    {
+        foreach ($this->getCriterias() as $criteria) {
+            if ($criteria->getId() !== $criteriaId) {
+                continue;
+            }
+            return $criteria;
+        }
+        throw new \DomainException('Criteria is not found');
+    }
+
     public function getId(): Id
     {
         return $this->id;

@@ -11,6 +11,7 @@ use App\Model\Procurement\Entity\Supplier\Supplier\Supplier;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "procurement_proposals")]
@@ -53,6 +54,7 @@ class Proposal
         \DateTimeImmutable $createdAt,
         array $criteriasValues
     ) {
+        Assert::true(count($criteriasValues) === count($request->getCriterias()));
         $this->id = $id;
         $this->supplier = $supplier;
         $this->request = $request;

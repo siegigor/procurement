@@ -16,6 +16,7 @@ class RequestBuilder
     private \DateTimeImmutable $date;
     /** @var array<int, array{name: string, percent: float}>  */
     private array $criterias = [];
+    private bool $isPublished = false;
 
     public function __construct(?string $id = null, ?Customer $customer = null)
     {
@@ -32,11 +33,21 @@ class RequestBuilder
         return $clone;
     }
 
+    public function published(): self
+    {
+        $clone = clone $this;
+        $clone->isPublished = true;
+        return $clone;
+    }
+
     public function build(): Request
     {
         $request = new Request($this->id, $this->customer, $this->description, $this->date);
         foreach ($this->criterias as $criteria) {
             $request->addCriteria($criteria['name'], $criteria['percent']);
+        }
+        if ($this->isPublished) {
+            $request->publish();
         }
         return $request;
     }

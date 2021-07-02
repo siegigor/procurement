@@ -24,6 +24,8 @@ class CreateTest extends TestCase
         self::assertEquals($customer, $request->getCustomer());
         self::assertEquals($desc, $request->getDescription());
         self::assertEquals($date, $request->getCreatedAt());
+        self::assertTrue($request->isDraft());
+        self::assertFalse($request->isPublished());
 
         self::assertNotEmpty($request->getCriterias());
         self::assertArrayHasKey(0, $request->getCriterias());

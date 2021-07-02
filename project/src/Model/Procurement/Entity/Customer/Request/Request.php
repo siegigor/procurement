@@ -8,17 +8,32 @@ use App\Model\Procurement\Entity\Customer\Customer\Customer;
 use App\Model\Procurement\Entity\Customer\Request\Evaluation\Criteria;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: "procurement_requests")]
 class Request
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'procurement_request_id')]
     private Id $id;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "customer_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Customer $customer;
+
+    #[ORM\Column(type: 'text')]
     private string $description;
+
+    #[ORM\Column]
     private \DateTimeImmutable $createdAt;
+
+    #[ORM\Column(type: 'procurement_request_status')]
     private Status $status;
     /**
      * @var Collection<int, Criteria>
      */
+    #[ORM\OneToMany(mappedBy: "request", targetEntity: Criteria::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $criterias;
 
     public function __construct(Id $id, Customer $customer, string $description, \DateTimeImmutable $createdAt)

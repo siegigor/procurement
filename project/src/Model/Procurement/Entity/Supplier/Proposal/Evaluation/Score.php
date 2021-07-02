@@ -7,13 +7,28 @@ namespace App\Model\Procurement\Entity\Supplier\Proposal\Evaluation;
 use App\Model\Procurement\Entity\Customer\Request\Evaluation\Criteria;
 use App\Model\Procurement\Entity\Supplier\Proposal\Proposal;
 use Ramsey\Uuid\Uuid;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: "procurement_proposal_scores")]
 class Score
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'guid')]
     private string $id;
+
+    #[ORM\ManyToOne(inversedBy: 'scores')]
+    #[ORM\JoinColumn(name: "proposal_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Proposal $proposal;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "criteria_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Criteria $criteria;
+
+    #[ORM\Column(type: 'procurement_proposal_score')]
     private ScoreValue $score;
+
+    #[ORM\Column]
     private string $value;
 
     public function __construct(Proposal $proposal, Criteria $criteria, string $value)

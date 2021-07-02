@@ -9,6 +9,7 @@ doctrine:
             procurement_request_id: 'App\Infrastructure\Doctrine\Type\Procurement\RequestIdType'
             procurement_supplier_id: 'App\Infrastructure\Doctrine\Type\Procurement\SupplierIdType'
             procurement_request_status: 'App\Infrastructure\Doctrine\Type\Procurement\RequestStatusType'
+            procurement_proposal_score: 'App\Infrastructure\Doctrine\Type\Procurement\ProposalScoreType'
 
     orm:
         auto_generate_proxy_classes: true
@@ -17,7 +18,7 @@ doctrine:
         mappings:
             Procurement:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/src/Model/Procurement'
-                prefix: 'App\Model\Procurement'
+                prefix: 'App\Model\Procurement\Entity'
                 alias: Procurement

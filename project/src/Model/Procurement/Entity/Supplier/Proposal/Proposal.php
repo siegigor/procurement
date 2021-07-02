@@ -10,18 +10,36 @@ use App\Model\Procurement\Entity\Supplier\Proposal\Evaluation\Score;
 use App\Model\Procurement\Entity\Supplier\Supplier\Supplier;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity]
+#[ORM\Table(name: "procurement_proposals")]
 class Proposal
 {
+    #[ORM\Id]
+    #[ORM\Column(type: 'procurement_proposal_id')]
     private Id $id;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "supplier_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Supplier $supplier;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "request_id", referencedColumnName: "id", nullable: false, onDelete: "CASCADE")]
     private Request $request;
+
+    #[ORM\Column(type: 'text')]
     private string $description;
+
+    #[ORM\Column]
     private \DateTimeImmutable $createdAt;
     /**
      * @var Collection<int, Score>
      */
+    #[ORM\OneToMany(mappedBy: "proposal", targetEntity: Score::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $scores;
+
+    #[ORM\Column(type: 'procurement_proposal_status')]
     private Status $status;
 
     /**

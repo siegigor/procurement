@@ -17,7 +17,7 @@ services:
             - ./project:/app
         environment:
             BASE_URL: 127.0.0.1:8081
-            DATABASE_URL: "postgresql://app:app@app:5432/app?serverVersion=11.2&charset=utf8"
+            DATABASE_URL: "postgresql://app:app@procurement-postgres:5432/app?serverVersion=11.2&charset=utf8"
 
     procurement-php-cli:
         build:
@@ -28,7 +28,7 @@ services:
             - procurement-composer:/root/.composer/cache
         environment:
             BASE_URL: 127.0.0.1:8081
-            DATABASE_URL: "postgresql://app:app@app:5432/app?serverVersion=11.2&charset=utf8"
+            DATABASE_URL: "postgresql://app:app@procurement-postgres:5432/app?serverVersion=11.2&charset=utf8"
         tty: true
 
     procurement-postgres:
@@ -40,7 +40,7 @@ services:
             POSTGRES_PASSWORD: app
             POSTGRES_DB: app
         ports:
-            - "54329:5432"
+            - "54321:5432"
 
 volumes:
     procurement-postgres:

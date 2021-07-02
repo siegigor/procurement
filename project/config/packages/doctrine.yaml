@@ -3,11 +3,12 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
 
         types:
-          procurement_customer_id: 'App\Infrastructure\Doctrine\Type\Procurement\CustomerIdType'
-          procurement_proposal_id: 'App\Infrastructure\Doctrine\Type\Procurement\ProposalIdType'
-          procurement_proposal_status: 'App\Infrastructure\Doctrine\Type\Procurement\ProposalStatusType'
-          procurement_request_id: 'App\Infrastructure\Doctrine\Type\Procurement\RequestIdType'
-          procurement_supplier_id: 'App\Infrastructure\Doctrine\Type\Procurement\SupplierIdType'
+            procurement_customer_id: 'App\Infrastructure\Doctrine\Type\Procurement\CustomerIdType'
+            procurement_proposal_id: 'App\Infrastructure\Doctrine\Type\Procurement\ProposalIdType'
+            procurement_proposal_status: 'App\Infrastructure\Doctrine\Type\Procurement\ProposalStatusType'
+            procurement_request_id: 'App\Infrastructure\Doctrine\Type\Procurement\RequestIdType'
+            procurement_supplier_id: 'App\Infrastructure\Doctrine\Type\Procurement\SupplierIdType'
+            procurement_request_status: 'App\Infrastructure\Doctrine\Type\Procurement\RequestStatusType'
 
     orm:
         auto_generate_proxy_classes: true

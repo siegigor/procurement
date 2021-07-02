@@ -15,6 +15,7 @@ class Request
     private Customer $customer;
     private string $description;
     private \DateTimeImmutable $createdAt;
+    private Status $status;
     /**
      * @var Collection<int, Criteria>
      */
@@ -26,6 +27,7 @@ class Request
         $this->customer = $customer;
         $this->description = $description;
         $this->createdAt = $createdAt;
+        $this->status = Status::draft();
         $this->criterias = new ArrayCollection();
         $this->addCriteria(Criteria::DEFAULT_NAME, Criteria::DEFAULT_PERCENT);
     }
@@ -39,6 +41,24 @@ class Request
         }
         $this->criterias->add($criteria = new Criteria($this, $name, $weight));
         return $criteria;
+    }
+
+    public function publish(): void
+    {
+        if ($this->isPublished()) {
+            throw new \DomainException('Request For Proposal is already published');
+        }
+        $this->status = Status::publish();
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->status->isPublished();
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status->isDraft();
     }
 
     public function getId(): Id
